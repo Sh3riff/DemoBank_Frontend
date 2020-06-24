@@ -1,0 +1,9 @@
+export { default as Home } from '.';
+export { default as CreditCard } from "./creditCard";
+export { default as Profile } from "./profile";
+export { default as Transfer } from "./transfer";
+export { default as Login } from './login';
+export { default as ForgetPassword } from "./forgetPassword";
+export { default as Signup } from './signup';
+export { default as SignupComplete } from "./signupComplete";
+export { default as PageNotFound } from "./404";
