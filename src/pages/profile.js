@@ -1,12 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { WrapStyle } from '../styledComponents/GlobalStyles';
-import { LoadContext } from '../contexts';
+import { LoadContext, AccountContext } from '../contexts';
+import {fetchAccountDetails } from '../utilities';
 import { Loader, UpdatePassword, UpdateProfile, Logout } from '../components/';
 
 
 const Profile = () => {
     
-    const { pageload } = useContext(LoadContext);
+    const { pageload, onPageload, loadReset } = useContext(LoadContext);
+    const { account, setAccount } = useContext(AccountContext);
+
+    useEffect(() => {
+        fetchAccountDetails(account, setAccount, onPageload, loadReset)
+    }, []);
 
     if(pageload.isLoading) return <Loader/>;
     return (

@@ -7,7 +7,7 @@ export default createGlobalStyle`
     padding: 0;
     list-style-type: none;
     box-sizing: border-box;
-    font-family: 'Gugi', cursive;
+    font-family: 'Roboto', sans-serif;
     outline: none;
     text-decoration: none;
     }
@@ -70,11 +70,48 @@ export const CardContainer = styled.div`
 
 `;
 
+export const MiniCover = styled.div`
+    background-color: ${props => props.theme.color.white};
+    border-radius: 5vmin;
+    max-width: 90vw;
+    min-width: ${props => props.full ? "75vw" : "50vmin"};
+    margin-bottom: 3vmin;
+    padding: 5vmin;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    a{
+        background-image: linear-gradient(to right, #08d3df, #7575ed, #f605fe);
+        font-size: calc(1.125rem + ((1vw - 3.75px) * 1.2109));
+        color: ${props => props.theme.color.white};
+        min-width: 60%;
+        position: relative;
+        margin: 5vh 0 1vh;
+        border-radius: 50px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover{                        
+            animation: hover .5s linear 0s infinite alternate;
+        }
+
+        @keyframes hover {
+            0%   {background-image: linear-gradient(to right, #08d3df, #7575ed, #f605fe)}
+            50%   {background-image: linear-gradient(to right, #f605fe, #08d3df, #7575ed)}
+            100% {background-image: linear-gradient(to right,#f605fe, #7575ed, #08d3df)}
+        }
+    }
+`;
+
 export const Button = styled.button`
     background-image: linear-gradient(to right, #08d3df, #7575ed, #f605fe);
     font-size: calc(1.125rem + ((1vw - 3.75px) * 1.2109));
     color: ${props => props.theme.color.white};
-    min-width: 20%;
+    min-width: 40%;
     position: relative;
     margin: 5vh 0;
     border-radius: 50px;

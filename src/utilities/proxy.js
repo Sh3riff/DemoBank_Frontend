@@ -1,3 +1,4 @@
-const proxy = "http://localhost:5000"
+// I was having issue with the package.json proxy so i created this
+const proxy = "https://randomapi.com"
 
 export default proxy

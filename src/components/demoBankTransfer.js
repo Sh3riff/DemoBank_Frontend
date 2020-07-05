@@ -1,21 +1,25 @@
 import React, { useState, useContext  } from 'react';
-import { LoadContext } from '../contexts';
+import { LoadContext, AccountContext } from '../contexts';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { proxy, requestHeader} from '../utilities';
+import { proxy } from '../utilities';
 import { FormContainer, ValidationError } from '../styledComponents/GlobalStyles';
 
-const DemoBankTransfer = (props) => {
+const DemoBankTransfer = () => {
+
+    const [verifiedName, setVerifiedName] = useState("");
+    const { pageload, onError, clearError, onComplete } = useContext(LoadContext);
+    const { account } = useContext(AccountContext);
 
     const initialValues = {
+        accountNumber: `${account.acctNo}`,
         bank: "Demo Bank",
         receiver: "",
         amount: ""
     };
 
-    const [verifiedName, setVerifiedName] = useState("");
-    const { pageload, onError, clearError, onComplete } = useContext(LoadContext);
+    
 
     const validationSchema = Yup.object({
         bank: Yup.string().required('select a bank'),
@@ -24,9 +28,9 @@ const DemoBankTransfer = (props) => {
     })
 
     const onSubmit = async (values) => {
-        if(values.amount > props.availableBalance) return onError("insufficient Balance!");
+        if(values.amount > account.acctBal) return onError("insufficient Balance!");
         try{
-            const pageRequest = await axios.patch(`${proxy}/user/transfer`, values, { headers: requestHeader });
+            const pageRequest = await axios.patch(`${proxy}/user/transfer`, values );
             const { status, message} = pageRequest.data;
             if(status === "error")  return onError(message);
             (function () {window.location.reload(false)})();
@@ -38,7 +42,7 @@ const DemoBankTransfer = (props) => {
     };
 
     const verifyAccount = (inputtedAccount) => {
-        axios.get(`${proxy}/user/verifyAccount/${inputtedAccount}`, { headers: requestHeader })
+        axios.get(`${proxy}/user/verifyAccount/${inputtedAccount}`)
             .then(value => {
                 console.log(value)
                 setVerifiedName(value.data.name)

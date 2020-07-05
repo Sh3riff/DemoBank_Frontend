@@ -1,14 +1,19 @@
-import React, {useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { WrapStyle, Button } from '../styledComponents/GlobalStyles';
 import { LoadContext, AccountContext } from '../contexts';
 import Loader from '../components/loader';
 import Cards from 'react-credit-cards';
 import "react-credit-cards/es/styles-compiled.css";
+import {fetchAccountDetails } from '../utilities';
 
 const CreditCard = () => {
 
-    const { pageload } = useContext(LoadContext);
+    const { pageload, onPageload, loadReset  } = useContext(LoadContext);
     const { account, setAccount} = useContext(AccountContext);
+
+    useEffect(() => {
+      fetchAccountDetails(account, setAccount, onPageload, loadReset)
+  }, []);
 
     const flipCard = () => {
         if(!account.creditCard.focused){

@@ -2,30 +2,31 @@ import React, { useContext } from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
+// import axios from 'axios';
 import { WrapStyle, FormContainer, ValidationError} from '../styledComponents/GlobalStyles';
 import {LoadContext} from '../contexts/loadContext';
 import Loader from '../components/loader';
 
 const ForgetPassword = () => {
 
-    const { pageload, onPageload, onError, clearError, onComplete } = useContext(LoadContext);
+    const { pageload, clearError } = useContext(LoadContext);
 
     const initialValues = {
         email: ""
     };
     
     const onSubmit = async (values) => {
-        onPageload();
-        try{
-            const pageRequest = await axios.post('/login', values);
-            const { status, message } = pageRequest.data;
-            if(status === "error")  return onError(message);
-            return onComplete();
-        }
-        catch(error) {
-            onError("Error, please try again.");
-        };
+        console.log("nothing!")
+        // onPageload();
+        // try{
+        //     const pageRequest = await axios.post('/login', values);
+        //     const { status, message } = pageRequest.data;
+        //     if(status === "error")  return onError(message);
+        //     return onComplete();
+        // }
+        // catch(error) {
+        //     onError("Error, please try again.");
+        // };
     };
     
     const validationSchema = Yup.object({

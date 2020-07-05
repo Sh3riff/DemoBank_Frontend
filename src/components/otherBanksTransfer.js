@@ -1,21 +1,23 @@
 import React, { useState, useContext  } from 'react';
-import { LoadContext } from '../contexts';
+import { LoadContext, AccountContext  } from '../contexts';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { FormContainer, ValidationError, Select } from '../styledComponents/GlobalStyles';
-import { proxy, requestHeader} from '../utilities';
+import { proxy } from '../utilities';
 
-const OtherBanksTransfer = (props) => {
+const OtherBanksTransfer = () => {
+
+    const [verifiedName, setVerifiedName] = useState("");
+    const { pageload, onError, clearError, onComplete } = useContext(LoadContext);
+    const { account } = useContext(AccountContext);
 
     const initialValues = {
+        accountNumber: `${account.acctNo}`,
         bank: "",
         receiver: "",
         amount: ""
     };
-
-    const [verifiedName, setVerifiedName] = useState("");
-    const { pageload, onError, clearError, onComplete } = useContext(LoadContext);
 
     const validationSchema = Yup.object({
         bank: Yup.string().required('select a bank'),
@@ -24,10 +26,11 @@ const OtherBanksTransfer = (props) => {
     })
 
     const onSubmit = async (values) => {
-        if(values.amount > props.availableBalance) return onError("insufficient Balance!");
+        if(values.amount > account.acctBal) return onError("insufficient Balance!");
         try{
-            const pageRequest = await axios.patch(`${proxy}/user/transfer/${props.sender}`, values, { headers: requestHeader } );
-            console.log(pageRequest)
+            const pageRequest = await axios.patch(`${proxy}/user/transfer`, values );
+            const { status, message} = pageRequest.data;
+            if(status === "error")  return onError(message);
             (function () {window.location.reload(false)})();
             return onComplete("Transaction successful");
         }
@@ -49,7 +52,7 @@ const OtherBanksTransfer = (props) => {
                 >
                 <Form>
                     <label>                       
-                        <Field as={Select} name="bank" onClick={props.clearError}>
+                        <Field as={Select} name="bank" onClick={clearError}>
                             <option>Select a bank </option>
                             <option value="Access Bank">Access Bank </option>
                             <option value="Citibank">Citibank</option>

@@ -2,15 +2,17 @@ import React, { useContext } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { FormContainer, ValidationError } from '../styledComponents/GlobalStyles';
-import { LoadContext } from '../contexts';
+import { LoadContext, AccountContext } from '../contexts';
 import axios from 'axios';
-import { proxy, requestHeader} from '../utilities';
+import { proxy } from '../utilities';
 
 const UpdatePassword = (props) => {
 
     const { pageload, onPageload, onError, clearError, onComplete } = useContext(LoadContext);
+    const { account } = useContext(AccountContext);
 
     const initialValues = {
+        accountNumber: account.acctNo,
         oldpassword: "",
         newpassword: "",
         newpassword2: ""
@@ -25,7 +27,7 @@ const UpdatePassword = (props) => {
     const onSubmit = async (values) => {
         onPageload();
         try{
-            const pageRequest = await axios.patch(`${proxy}/user/updatePassword`, values, { headers: requestHeader } );
+            const pageRequest = await axios.patch(`${proxy}/user/updatePassword`, values );
             const { status, message} = pageRequest.data;
             if(status === "error")  return onError(message);
             (function () {window.location.reload(false)})();
@@ -46,7 +48,7 @@ const UpdatePassword = (props) => {
                 onSubmit={ onSubmit }
                 >
                 <Form>                    
-                <label>Old Password                        
+                <label>Old Password                      
                     <Field type="password" name="oldpassword"  placeholder="Enter old password" autoComplete="new-password" onClick={clearError}/>
                     <ErrorMessage name="oldpassword" component={ValidationError}/>
                 </label>

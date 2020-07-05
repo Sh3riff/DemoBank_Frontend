@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const LoaderContainer = styled.p`
+const LoaderContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,7 +92,7 @@ const Loader = () => {
     return (
         <>
         <LoaderContainer>
-            <div class="lds-spinner">
+            <div className="lds-spinner">
                 <div></div>
                 <div></div>
                 <div></div>

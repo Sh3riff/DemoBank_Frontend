@@ -1,12 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { WrapStyle, CardContainer, Toggle } from '../styledComponents/GlobalStyles';
 import { LoadContext, AccountContext } from '../contexts';
+import {fetchAccountDetails } from '../utilities';
 import { Loader, DemoBankTransfer, OtherBanksTransfer }from '../components';
 
 const Transfer = () => {
 
-    const { pageload,  onError, clearError, onComplete, } = useContext(LoadContext);
-    const { account, setAccount } = useContext(AccountContext); 
+    const { pageload, onPageload, loadReset } = useContext(LoadContext);
+    const { account, setAccount } = useContext(AccountContext);
+    
+    useEffect(() => {
+        fetchAccountDetails(account, setAccount, onPageload, loadReset)
+    }, []);
 
     if(pageload.isLoading) return <Loader/>;
     return (
@@ -22,12 +27,9 @@ const Transfer = () => {
                 </Toggle>                
             </CardContainer>
             <>
-            {(account.transferToDemoBank) ? 
-                <DemoBankTransfer availableBalance={account.acctBal} sender={account.acctNo} onError={onError} onComplete={onComplete} clearError={clearError}/> : 
-                <OtherBanksTransfer availableBalance={account.acctBal} sender={account.acctNo} onError={onError} onComplete={onComplete} clearError={clearError}/>
-            }
+            {(account.transferToDemoBank) ? <DemoBankTransfer /> : <OtherBanksTransfer /> }
             </>
-        </ WrapStyle>
+        </ WrapStyle> 
     )
 }
 

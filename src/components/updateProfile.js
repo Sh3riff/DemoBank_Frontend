@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { FormContainer, ValidationError } from '../styledComponents/GlobalStyles';
 import { LoadContext, AccountContext} from '../contexts';
 import axios from 'axios';
-import { proxy, requestHeader} from '../utilities';
+import { proxy } from '../utilities';
 
 const UpdateProfile = () => {
 
@@ -12,10 +12,11 @@ const UpdateProfile = () => {
     const { account } = useContext(AccountContext);
     
     const initialValues = {
+        accountNumber: account.acctNo,
         lastname: account.lastName,
         firstname: account.firstName,
         email: account.email,
-        phone: account.phone,
+        phone: account.phone
     };
 
     const validationSchema = Yup.object({
@@ -28,7 +29,7 @@ const UpdateProfile = () => {
     const onSubmit = async (values) => {
         onPageload();
         try{
-            const pageRequest = await axios.patch(`${proxy}/user/updateProfile`, values, { headers: requestHeader } );
+            const pageRequest = await axios.patch(`${proxy}/user/updateProfile`, values);
             const { status, message} = pageRequest.data;
             if(status === "error")  return onError(message);
             (function () {window.location.reload(false)})();

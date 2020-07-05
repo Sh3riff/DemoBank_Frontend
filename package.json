@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-amplify/ui-react": "^0.2.9",
     "@hapi/joi": "^17.1.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.1",
     "@testing-library/user-event": "^7.2.1",
+    "aws-amplify": "^3.0.18",
+    "aws-amplify-react": "^4.1.17",
     "axios": "^0.19.2",
     "formik": "^2.1.4",
     "react": "^16.13.0",

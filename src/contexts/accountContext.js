@@ -17,6 +17,7 @@ const AccountContextProvider = (props) => {
         },
         email: "",
         phone:"",
+        role:"",
         transferToDemoBank: true
     }
 

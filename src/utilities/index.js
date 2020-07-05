@@ -1,2 +1,2 @@
 export { default as proxy } from './proxy';
-export { default as requestHeader } from './requestHeader';
+export { default as fetchAccountDetails } from './fetchAccountDetails';

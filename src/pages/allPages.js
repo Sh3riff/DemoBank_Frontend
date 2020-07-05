@@ -6,4 +6,5 @@ export { default as Login } from './login';
 export { default as ForgetPassword } from "./forgetPassword";
 export { default as Signup } from './signup';
 export { default as SignupComplete } from "./signupComplete";
+export { default as ListofCustomers } from "./listOfCustomers";
 export { default as PageNotFound } from "./404";

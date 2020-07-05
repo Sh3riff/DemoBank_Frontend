@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { proxy } from '../utilities';
-import axios from 'axios';
 import { WrapStyle, FormContainer, ValidationError} from '../styledComponents/GlobalStyles';
 import { AuthContext, LoadContext } from '../contexts';
 import Loader from '../components/loader';
+import { proxy } from '../utilities';
+import axios from 'axios';
 
 
 const Login = (props) => {
